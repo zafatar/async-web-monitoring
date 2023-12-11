@@ -1,0 +1,26 @@
+# Crawling related packages
+requests==2.31.0        # Not used - aiohttp is used instead
+beautifulsoup4==4.12.2
+
+# Asynchronous http client/server related packages
+aiohttp==3.9.0
+aiodns==3.1.1
+
+# Data modeling related packages
+pydantic==2.5.2
+pydantic-settings==2.1.0
+
+# Database (PostgreSQL) related packages
+psycopg2-binary==2.9.9
+
+# Code formatting related packages
+black==23.11.0
+flake8==6.1.0
+isort==5.12.0
+
+# Testing related packages
+pytest==7.4.3
+pytest-asyncio==0.21.1
+
+# Tabulate for client display
+tabulate==0.9.0
