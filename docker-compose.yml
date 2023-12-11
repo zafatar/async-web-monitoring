@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  webmonitor:
+    container_name: ${PROJECT_NAME:-app}-webmonitor
+    image: ${PROJECT_NAME:-app}/webmonitor:${PROJECT_VERSION:-latest}
+    build:
+      context: ./webmonitor
+      dockerfile: Dockerfile
+    env_file:
+      - .env.local
+    environment:
+      PROJECT_VERSION: ${PROJECT_VERSION:-latest}
+      POSTGRES_HOST: ${PROJECT_NAME:-app}-database
+      POSTGRES_PORT: 5432 # database container works from 5432 port
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_PRE_PATH: ${POSTGRES_PRE_PATH:-postgresql}
+      DEBUG: ${DEBUG:-False}
+    restart: always
+    depends_on:
+      - database
+    networks:
+      - app_net
+  database:
+    container_name: ${PROJECT_NAME:-app}-database
+    image: postgres:${POSTGRES_VERSION:-15.2}-alpine
+    env_file:
+      - .env.local
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      POSTGRES_PORT: 5432
+    restart: always
+    ports:
+      - ${POSTGRES_PORT:-5432}:5432
+    volumes:
+      - .db-data-${POSTGRES_VERSION:-15.2}:/var/lib/postgresql/data
+    networks:
+      - app_net
+
+networks:
+  app_net:
+    name: ${PROJECT_NAME:-app}-network
+    driver: bridge
