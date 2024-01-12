@@ -29,8 +29,9 @@ def ingest_links():
         existing_link = links_repo.get_by_url(link["url"])
 
         if existing_link:
-            print(existing_link)
-            print(f"Link {link['url']} already exists with ID {existing_link['id']}")
+            logger.info(
+                f"Link {link['url']} already exists with ID {existing_link['id']}"
+            )
             continue
 
         try:
@@ -42,7 +43,7 @@ def ingest_links():
                 access_interval=link["access_interval"],
             )
         except Exception as e:
-            print("Error({0}): {1}".format(e.pgcode, e.pgerror))
+            logger.error("Error({0}): {1}".format(e.pgcode, e.pgerror))
 
 
 if __name__ == "__main__":

@@ -65,20 +65,21 @@ def main():
             ]
         )
 
-    # print link and link_access_logs as a table (tabulate)
-    print(
-        tabulate(
-            tabular_data=link_stats_table,
-            headers=[
-                "ID",
-                "URL",
-                "First accessed at",
-                "Last accessed at",
-                "Total Access",
-            ],
-            tablefmt="fancy_grid",
-        )
+    # display links and link_access_logs as a table (tabulate)
+    tabulated_view = tabulate(
+        tabular_data=link_stats_table,
+        showindex=True,
+        headers=[
+            "ID",
+            "URL",
+            "First accessed at",
+            "Last accessed at",
+            "Total Access",
+        ],
+        tablefmt="fancy_grid",
     )
+
+    logger.info("Stats for the links:\n" + tabulated_view)
 
 
 if __name__ == "__main__":
