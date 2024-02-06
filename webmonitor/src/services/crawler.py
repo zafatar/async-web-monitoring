@@ -29,10 +29,10 @@ class Crawler:
     timeout = MAX_TIMEOUT
     result = None
 
-    def __init__(self, url: str = None, timeout: int = MAX_TIMEOUT) -> None:
+    def __init__(self, url: str = "", timeout: int = MAX_TIMEOUT) -> None:
         url = url.strip()
 
-        if url:
+        if url != "" and url.startswith("http"):
             self.url = url
         else:
             raise ValueError("Link is required")
