@@ -1,7 +1,11 @@
 from psycopg2 import Error
 
+import logging
+
 from src.database.repositories.base import BaseRepository
 from src.exceptions.database import DatabaseInsertError
+
+logger = logging.getLogger(__name__)
 
 
 class LinksRepository(BaseRepository):
@@ -105,7 +109,7 @@ class LinksRepository(BaseRepository):
                 )
                 conn.commit()
             except Error as e:
-                print("Error({0}): {1}".format(e.pgcode, e.pgerror))
+                logger.error("Error({0}): {1}".format(e.pgcode, e.pgerror))
                 raise DatabaseInsertError(message=f"Error inserting link: {e}")
             finally:
                 self._close_cursor(cursor)
